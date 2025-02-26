@@ -122,6 +122,15 @@ export const getAllTracks = async (accessToken, albums) => {
       }));
       allTracks = allTracks.concat(enrichedTracks);
     }
+
+    const allowedAlbums = ["To Pimp A Butterfly", "Section.80", "good kid, m.A.A.d city", "Overly Dedicated", "untitled  unmastered.", "DAMN.", "Mr. Morale & The Big Steppers", "GNX"];
+
+    for (const track of allTracks) {
+        if (!(allowedAlbums.includes(track.album))){
+            const index = allTracks.indexOf(track);
+            allTracks.splice(index, 1);
+        }
+    }
     return allTracks;
   };
 

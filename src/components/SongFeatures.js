@@ -13,10 +13,21 @@ function SongFeatures({ attemptValue }) {
   const normalizedGuessed = normalizeArray(guessedFeatures);
   const normalizedCorrect = normalizeArray(correctFeatures);
 
+  console.log(normalizedGuessed);
+  console.log(normalizedCorrect);
+
+  const isCorrect = () => {
+
+    if (normalizedGuessed.length === 0 && normalizedCorrect.length === 0){
+        return true;
+    } else 
+        return normalizedGuessed.length === normalizedCorrect.length &&
+        normalizedGuessed.every((feature, i) => feature === normalizedCorrect[i]);
+    }
+
+
   // Check for exact match (order matters; if order doesn't matter, sort them first)
-  const correct =
-    normalizedGuessed.length === normalizedCorrect.length &&
-    normalizedGuessed.every((feature, i) => feature === normalizedCorrect[i]);
+  const correct = isCorrect();
 
   // "Almost" if at least one feature is correct
   const almost = normalizedGuessed.some(feature =>
@@ -24,18 +35,22 @@ function SongFeatures({ attemptValue }) {
   );
 
   // If there's no guess, treat it as an error
-  const cellState =
-    (!guessedFeatures || normalizedGuessed.length === 0)
-      ? "error"
-      : correct
-      ? "correct"
-      : almost
-      ? "almost"
-      : "error";
+    const cellState = correct ? "correct" : almost ? "almost" : "error";
+
+    const hasNoFeatures = () => {
+        if (normalizedGuessed.length === 0){
+            return "No Features";
+        } else {
+            return;
+        }
+    }
+
+ 
 
   return (
     <div className="songfeatures" id={cellState}>
       {Array.isArray(guessedFeatures) ? guessedFeatures.join(', ') : ''}
+      {hasNoFeatures()}
     </div>
   );
 }

@@ -16,24 +16,33 @@ function SongAlbum({attemptValue}) {
     const song = searchSongByName(songs, songName);
     const albumReleaseDate = song.releaseDate;
 
-    const correctAlbumReleaseYear = correctAlbumReleaseDate.substring(0,4);
-    const correctAlbumReleaseMonth = correctAlbumReleaseDate.substring(5,7);
-    const albumReleaseYear = albumReleaseDate.substring(0,4);
-    const albumReleaseMonth = albumReleaseDate.substring(5,7);
+    const correctAlbumReleaseYear = parseInt(correctAlbumReleaseDate.substring(0,4));
+    const correctAlbumReleaseMonth = parseInt(correctAlbumReleaseDate.substring(5,7));
+    const albumReleaseYear = parseInt(albumReleaseDate.substring(0,4));
+    const albumReleaseMonth = parseInt(albumReleaseDate.substring(5,7));
 
 
     console.log(correctAlbumReleaseYear);
     console.log(correctAlbumReleaseMonth);
 
-    //const songAlbumReleaseDate = albumReleaseDate.subString(0,3);
+    const isYounger = () => {
 
+        if (correctAlbumReleaseYear === albumReleaseYear){
+            return correctAlbumReleaseMonth >= albumReleaseMonth;
+        } else {
+            return correctAlbumReleaseYear >= albumReleaseYear;
+        }
+
+    }
 
 
     const correct = songAlbum === correctSong.album;
-    const younger = false;
-    const older = false;
+    const younger = isYounger();
+    const older = !younger;
 
-    const cellState = correct ? "correct" : "error";
+
+    // If the selected song is older than the correct song it sets background to blue, if younger sets to red
+    const cellState = correct ? "correct" : younger ? "younger": older ? "older" : "error";
 
     
   return (
