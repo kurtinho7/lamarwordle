@@ -8,6 +8,7 @@ import {
     fetchKendrickAlbums,
     getAllTracks,
   } from './Songs';
+import HeaderRow from './components/HeaderRow';
 
 export const AppContext = createContext();
 
@@ -76,7 +77,9 @@ function App() {
         </nav>
         <AppContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt, correctSong, songs, setSongs}}>
             <div className="game">
+                <h1>Guess The Kendrick Song</h1>
                 <TextBox />
+                <HeaderRow />
                 <Board />
             </div>
         </AppContext.Provider>

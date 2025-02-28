@@ -124,13 +124,17 @@ export const getAllTracks = async (accessToken, albums) => {
     }
 
     const allowedAlbums = ["To Pimp A Butterfly", "Section.80", "good kid, m.A.A.d city", "Overly Dedicated", "untitled  unmastered.", "DAMN.", "Mr. Morale & The Big Steppers", "GNX"];
+    const notAllowed = ["DAMN. COLLECTORS EDITION"];
 
-    for (const track of allTracks) {
-        if (!(allowedAlbums.includes(track.album))){
-            const index = allTracks.indexOf(track);
-            allTracks.splice(index, 1);
+    const allAllowedTracks = [];
+
+    for (let i = allTracks.length - 1; i >= 0; i--) {
+        if (notAllowed.includes(allTracks[i].album) || !(allowedAlbums.includes(allTracks[i].album)) ){
+            //const index = allTracks.indexOf(track);
+            allTracks.splice(i, 1);
         }
     }
+    console.log(allTracks);
     return allTracks;
   };
 

@@ -1,29 +1,50 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../App';
-import {searchSongByName} from '../App'
-import {
-    fetchSpotifyToken,
-    fetchKendrickAlbums,
-    getAllTracks,
-    fetchSongDataByGuess
-  } from '../Songs';
 
-function TextBox({onSubmit}) {
-    const [songName, setSongName] = useState('');
-
-    const {board, setBoard, currAttempt, setCurrAttempt, songs, setSongs, correctSong} = useContext(AppContext);
+function TextBox({ onSubmit }) {
+  const [songName, setSongName] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const { board, setBoard, currAttempt, setCurrAttempt, songs } = useContext(AppContext);
 
 
-    const handleChange = (e) => {
-        setSongName(e.target.value);
-    };
 
-    const guessSong = (guessInput) => {
-        const songGuess = searchSongByName(songs, guessInput);
-  
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+    setSongName(input);
+    console.log('User input:', input);
+
+    if (input.length > 0) {
+      const filtered = songs.filter(song =>
+        song.songName.toLowerCase().includes(input.toLowerCase())
+      );
+      console.log('Filtered suggestions:', filtered);
+      setSuggestions(filtered);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (suggestedSongName) => {
+    setSongName(suggestedSongName);
+    setSuggestions([]);
+  };
+
+  const searchSongByName = (songs, guess) => {
+    if (!guess || typeof guess !== 'string') {
+      console.error('searchSongByName: Invalid guess provided:', guess);
+      return undefined;
+    }
+    const normalizedGuess = guess.trim().toLowerCase();
+    return songs.find(song => song.songName.toLowerCase() === normalizedGuess);
+  };
+
+  const guessSong = (guessInput) => {
+    const songGuess = searchSongByName(songs, guessInput);
+
     if (!songGuess) {
-        alert('Song not found. Please check your spelling or try another song.');
-        return;
+      alert('Song not found. Please check your spelling or try another song.');
+      return;
     }
 
     // Copy the board so we can update it
@@ -36,32 +57,38 @@ function TextBox({onSubmit}) {
 
     setBoard(newBoard);
     setCurrAttempt({ attempt: currAttempt.attempt + 1 });
-    };
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Do something with the song name, for example, pass it to a parent component
-        guessSong(songName);
-        // Clear the textbox after submission (optional)
-        setSongName('');
-      };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    guessSong(songName);
+    setSongName('');
+    setSuggestions([]);
+  };
 
   return (
-    <div className="songname">
-        <form onSubmit={handleSubmit}>
+    <div className="textbox-container">
+      <form onSubmit={handleSubmit}>
         <input
-            type = "text"
-            placeholder = "Enter Song Name"
-            value = {songName}
-            onChange = {handleChange}
+          type="text"
+          placeholder="Enter Song Name"
+          value={songName}
+          onChange={handleChange}
+          autoComplete="off"
         />
-        <button type ="submit">Guess</button>
-
-        </form>
+        <button type="submit">Guess</button>
+      </form>
+      {suggestions.length > 0 && (
+        <ul className="suggestions-dropdown">
+          {suggestions.map((song, idx) => (
+            <li key={idx} onClick={() => handleSuggestionClick(song.songName)}>
+              {song.songName}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
 
-
-
-export default TextBox
+export default TextBox;

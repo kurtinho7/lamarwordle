@@ -3,7 +3,7 @@
     text-align: center;
     background-color: #121212;
     width: 100vw;
-    height: 100vh;
+    overflow-y: auto;
     /* display: flex; */
     color: white;
   }
@@ -38,10 +38,10 @@
   }
   
   .board {
-    width: 450px;
-    height: 550px;
+    width: 800px;
+    height: flex;
     border: 1px solid black;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
   }
   
@@ -54,12 +54,12 @@
   
   .songname {
     flex: 33%;
-    height: 100%;
+    height: 75px;
     border: 1px solid grey;
     margin: 5px;
     display: grid;
     place-items: center;
-    font-size: 30px;
+    font-size: flex;
     font-weight: bolder;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
@@ -67,12 +67,12 @@
 
   .songalbum {
     flex: 33%;
-    height: 100%;
+    height: 75px;
     border: 1px solid grey;
     margin: 5px;
     display: grid;
     place-items: center;
-    font-size: 30px;
+    font-size: flex;
     font-weight: bolder;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
@@ -80,12 +80,12 @@
 
   .songfeatures {
     flex: 33%;
-    height: 100%;
+    height: 75px;
     border: 1px solid grey;
     margin: 5px;
     display: grid;
     place-items: center;
-    font-size: 15px;
+    font-size: flex;
     font-weight: bolder;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
@@ -93,7 +93,7 @@
 
   .songlength {
     flex: 33%;
-    height: 100%;
+    height: 75px;
     border: 1px solid grey;
     margin: 5px;
     display: grid;
@@ -106,7 +106,7 @@
 
   .songnumber {
     flex: 33%;
-    height: 100%;
+    height: 75px;
     border: 1px solid grey;
     margin: 5px;
     display: grid;
@@ -186,3 +186,88 @@
   #disabled {
     background-color: #3a393c;
   }
+
+  .board-header {
+    width: 800px;
+    margin-bottom: 1rem;
+  }
+  
+  .header-row {
+    display: flex;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+  }
+  
+  .header-cell {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  /* Container for the textbox and button */
+.textbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  /* Style for the text input */
+  .textbox-container input[type="text"] {
+    width: 300px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Focus state for the text input */
+  .textbox-container input[type="text"]:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+  
+  /* Style for the button */
+  .textbox-container button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover state for the button */
+  .textbox-container button:hover {
+    background-color: #0056b3;
+  }
+
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 2px solid #007bff; /* temporary border to see it */
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color:#121212;
+  }
+  
+  .suggestions-dropdown li {
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+  
+  .suggestions-dropdown li:hover {
+    background-color: #f0f0f0;
+  }
+  
