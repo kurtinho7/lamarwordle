@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lamarwordle/static/css/main.eeb5052e.css",
+    "main.js": "/lamarwordle/static/js/main.5dec1824.js",
+    "index.html": "/lamarwordle/index.html",
+    "main.eeb5052e.css.map": "/lamarwordle/static/css/main.eeb5052e.css.map",
+    "main.5dec1824.js.map": "/lamarwordle/static/js/main.5dec1824.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eeb5052e.css",
+    "static/js/main.5dec1824.js"
+  ]
+}
