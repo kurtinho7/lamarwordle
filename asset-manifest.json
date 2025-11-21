@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/lamarwordle/static/css/main.d5212d0e.css",
-    "main.js": "/lamarwordle/static/js/main.5dec1824.js",
+    "main.js": "/lamarwordle/static/js/main.725247f7.js",
     "index.html": "/lamarwordle/index.html",
     "main.d5212d0e.css.map": "/lamarwordle/static/css/main.d5212d0e.css.map",
-    "main.5dec1824.js.map": "/lamarwordle/static/js/main.5dec1824.js.map"
+    "main.725247f7.js.map": "/lamarwordle/static/js/main.725247f7.js.map"
   },
   "entrypoints": [
     "static/css/main.d5212d0e.css",
-    "static/js/main.5dec1824.js"
+    "static/js/main.725247f7.js"
   ]
 }
