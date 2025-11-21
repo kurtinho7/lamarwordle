@@ -44,9 +44,13 @@ function SongAlbum({attemptValue}) {
     // If the selected song is older than the correct song it sets background to blue, if younger sets to red
     const cellState = correct ? "correct" : younger ? "younger": older ? "older" : "error";
 
+    const arrow = correct ? '' : younger ? '↑' : '↓';
+
     
   return (
-    <div className="songalbum" id={cellState}>{songAlbum}</div>
+    <div className="songalbum" id={cellState}>
+        <span>{songAlbum}</span>{arrow && <span className="arrow">{arrow}</span>}
+    </div>
   )
 }
 

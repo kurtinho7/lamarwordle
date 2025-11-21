@@ -72,12 +72,28 @@
     height: 75px;
     border: 1px solid grey;
     margin: 5px;
-    display: grid;
-    place-items: center;
-    font-size: flex;
+    display: flex;
+    flex-direction: row;       
+    align-items: center;       
+    justify-content: center;   
+    text-align: center;
+    gap: 8px;                  
     font-weight: bolder;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+  }
+  
+  .songalbum span {
+    display: inline-block;
+    max-width: 80%;            /* prevent overflow */
+    word-wrap: break-word;     /* allow text wrapping */
+  }
+  
+  .arrow {
+    font-size: 22px;
+    flex-shrink: 0;            /* keeps arrow fixed width */
+    line-height: 1;
   }
 
   .songfeatures {

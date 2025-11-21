@@ -41,17 +41,13 @@ function App() {
     useEffect(() => {
         const fetchSongs = async () => {
           try {
-            // 1. Get Spotify access token
             const token = await fetchSpotifyToken();
     
-            // 2. Fetch Kendrick Lamar's albums
             const albums = await fetchKendrickAlbums(token);
     
-            // 3. Get and enrich tracks from all albums
             const allTracks = await getAllTracks(token, albums);
             setSongs(allTracks);
     
-            // 4. Randomly choose one song as the correct answer for the game
             const randomSong = allTracks[Math.floor(Math.random() * allTracks.length)];
             setCorrectSong(randomSong);
             console.log(randomSong.songName);
