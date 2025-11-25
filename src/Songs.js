@@ -8,16 +8,13 @@ function KendrickSongs() {
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        // 1. Get Spotify access token
         const token = await fetchSpotifyToken();
 
-        // 2. Fetch Kendrick Lamar's albums
         const albums = await fetchKendrickAlbums(token);
-        // For simplicity, we'll take the first album and fetch its tracks.
 
         const allTracks = await getAllTracks(token, albums);
 
-        setSongs(allTracks); // Update the state here
+        setSongs(allTracks);
 
         return allTracks;
         
@@ -102,52 +99,43 @@ const fetchAlbumTracks = async (albumId, token) => {
 
 export const getAllTracks = async (accessToken, albums) => {
     let allTracks = [];
-    for (const album of albums) {
-      const albumTracks = await fetchAlbumTracks(album.id, accessToken);
-      if (!albumTracks) {
-        console.error(`No tracks returned for album: ${album.name}`);
-        continue;
-      }
-      const enrichedTracks = albumTracks.map(track => ({
-        ...track,
-        songName: track.name,
-        album: album.name,
-        songNumber: track.track_number,
-        songLength: track.duration_ms,
-        features: track.artists
-          .filter(artist => artist.name !== 'Kendrick Lamar')
-          .map(artist => artist.name),
-        releaseDate: album.release_date,
-        albumImage: (album.images)[0],
-      }));
-      allTracks = allTracks.concat(enrichedTracks);
-    }
-
     const allowedAlbums = ["To Pimp A Butterfly", "Section.80", "good kid, m.A.A.d city", "Overly Dedicated", "untitled  unmastered.", "DAMN.", "Mr. Morale & The Big Steppers", "GNX"];
     const notAllowed = ["DAMN. COLLECTORS EDITION"];
+    const filteredAlbums = albums.filter(
+        (album) =>
+          allowedAlbums.includes(album.name) && !notAllowed.includes(album.name)
+    );
 
-    const allAllowedTracks = [];
+    const trackPromises = filteredAlbums.map(async (album) => {
+        const albumTracks = await fetchAlbumTracks(album.id, accessToken);
+        const enrichedTracks = albumTracks.map(track => ({
+            ...track,
+            songName: track.name,
+            album: album.name,
+            songNumber: track.track_number,
+            songLength: track.duration_ms,
+            features: track.artists
+              .filter(artist => artist.name !== 'Kendrick Lamar')
+              .map(artist => artist.name),
+            releaseDate: album.release_date,
+            albumImage: (album.images)[0],
+          }));
+          return enrichedTracks;
+    })
 
-    for (let i = allTracks.length - 1; i >= 0; i--) {
-        if (notAllowed.includes(allTracks[i].album) || !(allowedAlbums.includes(allTracks[i].album)) ){
-            //const index = allTracks.indexOf(track);
-            allTracks.splice(i, 1);
-        }
-    }
-    console.log(allTracks);
+    const tracksPerAlbum = await Promise.all(trackPromises);
+
+    allTracks = tracksPerAlbum.flat()
+
     return allTracks;
   };
 
-  // In your spotifyApi.js file
 
 export const fetchSongDataByGuess = async (songGuess) => {
-    // First, get an access token
     const token = await fetchSpotifyToken();
   
-    // Encode the guess for URL use
     const query = encodeURIComponent(songGuess);
   
-    // Use the search endpoint: limit=1 for simplicity (or adjust as needed)
     const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track&limit=1`, {
       headers: {
         'Authorization': `Bearer ${token}`
